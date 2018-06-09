@@ -751,6 +751,7 @@ def _get_import_package_job_config(build_file):
         'target_queue': build_file.target_queue,
         'abi_incompatibility_assumed': build_file.abi_incompatibility_assumed,
         'notify_emails': build_file.notify_emails,
+        'ros_buildfarm_repository': get_repository(),
     }
     job_config = expand_template(template_name, job_data)
     return job_config
