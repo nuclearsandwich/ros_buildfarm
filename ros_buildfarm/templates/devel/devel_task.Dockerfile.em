@@ -54,7 +54,12 @@ RUN echo "@today_str"
     os_code_name=os_code_name,
 ))@
 
+RUN python3 -u /tmp/wrapper_scripts/apt.py update-install-clean -q -y python3-pip
+RUN pip3 install -U setuptools
 RUN python3 -u /tmp/wrapper_scripts/apt.py update-install-clean -q -y ccache
+@[if rosdistro_name == 'bouncy']@
+RUN python3 -u /tmp/wrapper_scripts/apt.py update-install-clean -q -y ros-@(rosdistro_name)-ros-workspace
+@[end if]@
 
 @(TEMPLATE(
     'snippet/set_environment_variables.Dockerfile.em',
@@ -89,7 +94,7 @@ else:
         # also specify /opt/ros in case the install location has no setup files
         # e.g. if the workspace contains no packages
         '/opt/ros/%s' % rosdistro_name,
-        '/tmp/catkin_workspace/install_isolated',
+        '/tmp/catkin_workspace/install',
     ]
     cmd += \
         ' --workspace-root /tmp/catkin_workspace_overlay' + \
