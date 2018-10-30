@@ -10,6 +10,7 @@ else:
     script='\n'.join([
         'echo "# BEGIN SECTION: Check docker status"',
         'echo "Testing trivial docker invocation..."',
+        'docker pull %s ; echo "\'docker pull\' returned $?"' % base_image,
         'docker run --rm %s true ; echo "\'docker run\' returned $?"' % base_image,
     ]),
 ))@
@@ -24,7 +25,7 @@ import java.io.BufferedReader
 import java.util.regex.Pattern
 import org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildAction
 
-pattern = Pattern.compile("'docker run' returned [^0].*")
+pattern = Pattern.compile("'docker (pull|run)' returned [^0].*")
 
 r = build.getLogReader()
 br = new BufferedReader(r)
@@ -32,7 +33,7 @@ def line
 while ((line = br.readLine()) != null) {
     matcher = pattern.matcher(line)
     if (matcher.matches()) {
-        println "'docker run' failed"
+        println "'docker pull or run' failed"
 
         // mark agent as offline and log event
         def node = build.getBuiltOn()
