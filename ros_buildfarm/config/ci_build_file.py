@@ -83,3 +83,10 @@ class CIBuildFile(BuildFile):
         if 'underlay_from_ci_jobs' in data:
             self.underlay_from_ci_jobs = data['underlay_from_ci_jobs']
             assert isinstance(self.underlay_from_ci_jobs, list)
+
+        self.custom_rosdep_urls = []
+        if '_config' in data['targets']:
+            if 'custom_rosdep_urls' in data['targets']['_config']:
+                self.custom_rosdep_urls = \
+                    data['targets']['_config']['custom_rosdep_urls']
+                assert isinstance(self.custom_rosdep_urls, list)
