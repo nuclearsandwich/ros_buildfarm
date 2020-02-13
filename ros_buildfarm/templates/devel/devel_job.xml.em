@@ -198,7 +198,6 @@ if pull_request:
         ' -e=TRAVIS=$TRAVIS' +
         ' -v $WORKSPACE/ros_buildfarm:/tmp/ros_buildfarm:ro' +
         ' -v $WORKSPACE/ws:/tmp/ws' +
-        ' -v $HOME/.ccache:/home/buildfarm/.ccache' +
         ' devel_build_and_install.%s_%s' % (rosdistro_name, source_repo_spec.name.lower()),
         'cd -',  # restore pwd when used in scripts
         'echo "# END SECTION"',
@@ -229,7 +228,6 @@ if pull_request:
         ' -e=TRAVIS=$TRAVIS' +
         ' -v $WORKSPACE/ros_buildfarm:/tmp/ros_buildfarm:ro' +
         ' -v $WORKSPACE/ws:/tmp/ws' +
-        ' -v $HOME/.ccache:/home/buildfarm/.ccache' +
         ' devel_build_and_test.%s_%s' % (rosdistro_name, source_repo_spec.name.lower()),
         'cd -',  # restore pwd when used in scripts
         'echo "# END SECTION"',
